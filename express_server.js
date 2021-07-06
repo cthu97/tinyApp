@@ -45,16 +45,24 @@ app.get("/urls/:shortURL", (req, res) => {
   res.render("urls_show", templateVars);
 });
 
-app.post('/urls/:shortURL/delete', (req, res) =>{
-  const shortURL = req.params.shortURL
-  delete urlDatabase[shortURL]
-  res.redirect('/urls')
-});
-
 app.get('/u/:shortURL', (req, res) =>{
   const longURL = urlDatabase[req.params.shortURL]
   res.redirect(longURL);
 })
+
+//delete
+app.post('/urls/:shortURL/delete', (req, res)  => {
+  const shortURL = req.params.shortURL
+  delete urlDatabase[shortURL]
+  res.redirect('/urls')
+ })
+
+ //update
+app.post('/urls/:id', (req, res) => {
+  const shortURL = req.params.id 
+  urlDatabase[shortURL] = req.body.longURL
+  res.redirect('/urls')
+});
 
 app.post("/urls", (req, res) => {
   let shortURL = generateRandomString();
