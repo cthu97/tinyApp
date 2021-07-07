@@ -6,11 +6,11 @@ const bodyParser = require('body-parser');
 
 app.set('view engine', 'ejs');
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({extended:true}))
+app.use(bodyParser.urlencoded({extended:false}))
 
 
 const generateRandomString = () => {
-  return Math.random().toString(36).substring(7)
+  return Math.random().toString(36).substring(7);
 }
 
 const urlDatabase = {
@@ -50,14 +50,18 @@ app.get('/u/:shortURL', (req, res) =>{
   res.redirect(longURL);
 })
 
-//delete
+app.post('/login', (req, res) => {
+  const username = req.body.username;
+  res.cookie('username', username)
+  res.redirect('/urls')
+});
+
 app.post('/urls/:shortURL/delete', (req, res)  => {
   const shortURL = req.params.shortURL
   delete urlDatabase[shortURL]
   res.redirect('/urls')
  })
 
- //update
 app.post('/urls/:id', (req, res) => {
   const shortURL = req.params.id 
   urlDatabase[shortURL] = req.body.longURL
