@@ -95,7 +95,18 @@ app.get("/register", (req, res) => {
 
 app.post('/register', (req, res) => {
   const {email, password} = req.body;
+  if (!email || !password){
+    return res.status(400).send('email/password no blank pls')
+  }
+
+  const user = findUserEmail(email)
+  
+  if (user){
+    return res.status(400).send('y u try to register again la')
+  }
+
   const userID = addUser(email, password);
+  
   res.cookie('user_id', userID)
   res.redirect('/urls')
 });
