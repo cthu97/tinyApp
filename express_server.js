@@ -16,6 +16,39 @@ const generateRandomString = () => {
   return Math.random().toString(36).substring(7);
 }
 
+const findUserEmail = (email) => {
+  for (const userID in users) {
+    const user = users[userID];
+    if (user.email===email){
+      return user;
+    }
+  }
+  return null;
+}
+
+const users = {
+  "user1": {
+    id: 'user1',
+    email: 'a@a.com',
+    password: 'pw'
+  },
+  'user2': {
+    id: 'user2',
+    email: 'a@mail.com',
+    password: 'pwpw'
+  }
+}
+
+const addUser = (email, password) => {
+  const userID = generateRandomString();
+  user[userID]= {
+    id: userID,
+    email,
+    password,
+  }
+  return userID
+}
+
 const urlDatabase = {
   'b2xVn2': 'http://www.lighthouselabs.ca',
   '9sm5xK': 'http://www.google.ca',
@@ -57,6 +90,15 @@ app.get("/register", (req, res) => {
   const templateVars = { username: req.cookies["username"] };
   res.render("urls_registration", templateVars);
 });
+
+//#########################################################
+
+app.post('/register', (req, res) => {
+  const {email, password} = req.body;
+  const userID = addUser(email, password);
+  res.cookie('userID', userID)
+  res.render('urls_registration')
+})
 
 app.post('/login', (req, res) => {
   const username = req.body.name;
