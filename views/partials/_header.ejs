@@ -13,16 +13,19 @@
     </div>
     <% if (user) {%>
       <p class="lead" style="margin-top: 10px;">
-      Hello, <%= user.email %>!
-    </p>
+        Hello, <%= user.email %>!
+      </p>
       <form method="POST" action="/logout">
-        <button type="submit" class="btn btn-secondary btn-sm" style="margin-top:12px; margin-left: 10px;">Sign out</button>
+        <button type="submit" class="btn btn-secondary btn-sm" style="margin-top:12px; margin-left: 10px;">Sign
+          out</button>
       </form>
       <%} else { %>
-          <form class="form-inline" action="/login" method="POST">
-            <input class="form-control" type="text" name="name" placeholder="Username" style ="margin-right: 10px; margin-top: 10px">
-            <button type="submit" class="btn btn-success" style="margin-top:10px;">Sign in</button>
-            <% } %>
+        <form method="GET" action="/login">
+          <button type="submit" class="btn btn-secondary">login</button>
         </form>
+        <form method="GET" action="/register">
+          <button type="submit" class="btn btn-secondary">register</button>
+        </form>
+        <% } %>
   </nav>
 </header>

@@ -71,14 +71,14 @@ app.get('/urls', (req, res) => {
   res.render('urls_index', templateVars)
 });
 
-app.get("/urls/new", (req, res) => {
-  const templateVars = {  user: users[req.cookies["username"]] }
-  res.render("urls_new", templateVars)
+app.get('/urls/new', (req, res) => {
+  const templateVars = {  user: users[req.cookies['username']] }
+  res.render('urls_new', templateVars)
 })
 
-app.get("/urls/:shortURL", (req, res) => {
-  const templateVars = {  user: users[req.cookies["username"]], shortURL: req.params.shortURL, longURL: urlDatabase[req.params.longURL] };
-  res.render("urls_show", templateVars);
+app.get('/urls/:shortURL', (req, res) => {
+  const templateVars = {  user: users[req.cookies['username']], shortURL: req.params.shortURL, longURL: urlDatabase[req.params.longURL] };
+  res.render('urls_show', templateVars);
 });
 
 app.get('/u/:shortURL', (req, res) => {
@@ -86,9 +86,14 @@ app.get('/u/:shortURL', (req, res) => {
   res.redirect(longURL);
 })
 
-app.get("/register", (req, res) => {
-  const templateVars = {  user: users[req.cookies["username"]] };
+app.get('/register', (req, res) => {
+  const templateVars = {  user: users[req.cookies['username']] };
   res.render("urls_registration", templateVars);
+});
+
+app.get('/login', (req, res) => {
+  const templateVars = { user:users[req.cookies['username']] };
+  res.render('urls_login', templateVars)
 });
 
 //#########################################################
@@ -106,7 +111,7 @@ app.post('/register', (req, res) => {
   }
 
   const userID = addUser(email, password);
-  
+
   res.cookie('user_id', userID)
   res.redirect('/urls')
 });
