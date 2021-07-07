@@ -12,18 +12,17 @@
       </div>
     </div>
     <% if (username) {%>
-      <h3>Hello <%= username %>!</h3>
+      <p class="lead" style="margin-top: 10px;">
+      Hello, <%= username %>!
+    </p>
       <form method="POST" action="/logout">
-        <button type="submit" class="btn btn-secondary">Sign out</button>
+        <button type="submit" class="btn btn-secondary btn-sm" style="margin-top:12px; margin-left: 10px;">Sign out</button>
       </form>
       <%} else { %>
-        <form class="form inline" action="/login" method="POST">
-          <div class="d-grid gap-2 d-md-flex justify-content-md-end"></div>
-          <input class="form-control" type="text" name="name" placeholder="username">
-          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button type="submit" class="btn btn-success">Sign in</button>
-        <% } %>
-          </div>
+          <form class="form-inline" action="/login" method="POST">
+            <input class="form-control" type="text" name="name" placeholder="Username" style ="margin-right: 10px; margin-top: 10px">
+            <button type="submit" class="btn btn-success" style="margin-top:10px;">Sign in</button>
+            <% } %>
         </form>
   </nav>
 </header>
