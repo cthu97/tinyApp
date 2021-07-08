@@ -21,6 +21,7 @@
         </tr>
       </thead>
       <tbody>
+        <% if (user){ %>
         <% for(let url in urls) { %>
           <tr>
             <td><%= url %></td>
@@ -37,6 +38,14 @@
           </td>
           </tr>
           <% } %>
+          <% } else { %>
+            <tr>
+              <a href='/login'> Log in to see URLs </a>
+            </br>
+              <a href='/register'> Not registered yet? Register now! </a>
+            </tr>
+            <% } %>
+
       </tbody>
     </table>
   </main>

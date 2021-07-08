@@ -59,6 +59,16 @@ const addUser = (email, password) => {
   return userID
 }
 
+const urlsForUser = (id) => {
+  const userURLS = {};
+  for (const shortURL in urlDatabase){
+    const urlData = urlDatabase[shortURL];
+    if (urlData.userID === id){
+    }
+  }
+  return userURLS
+}
+
 const urlDatabase = {
   'b2xVn2': {
     longURL: 'http://www.lighthouselabs.ca',
@@ -98,7 +108,7 @@ app.get('/urls/new', (req, res) => {
 })
 
 app.get('/urls/:shortURL', (req, res) => {
-  const templateVars = { user: users[req.cookies['user_id']], shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL].longURL,  userID: urlDatabase[req.params.shortURL].userID };
+  const templateVars = { user: users[req.cookies['user_id']], shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL].longURL, userID: urlDatabase[req.params.shortURL].userID };
   res.render('urls_show', templateVars);
 });
 
@@ -164,15 +174,23 @@ app.post('/logout', (req, res) => {
 });
 
 app.post('/urls/:shortURL/delete', (req, res) => {
-  const shortURL = req.params.shortURL
-  delete urlDatabase[shortURL]
-  res.redirect('/urls')
+  if (req.cookies["user_id"] === urlDatabase[req.params.shortURL].userID){
+    const shortURL = req.params.shortURL
+    delete urlDatabase[shortURL]
+    res.redirect('/urls')
+  } else {
+    res.status(401).send("Unable to delete URL: account not creator")
+  }  
 });
 
 app.post('/urls/:id', (req, res) => {
-  const shortURL = req.params.id
-  urlDatabase[shortURL] = req.body.longURL
-  res.redirect('/urls')
+  if (req.cookies["user_id"] === urlDatabase[req.params.id].userID){
+    const shortURL = req.params.id
+    urlDatabase[shortURL].longURL = req.body.longURL;
+    res.redirect('/urls')
+  } else {
+    res.status(401).send("Unable to use URL: account not creator")
+  }
 });
 
 app.post("/urls", (req, res) => {
