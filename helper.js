@@ -1,3 +1,5 @@
+const bcrypt = require('bcryptjs');
+
 const getUserByEmail = (users, email) => {
   for (const userID in users) {
     const user = users[userID];

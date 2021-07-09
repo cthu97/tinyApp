@@ -10,6 +10,7 @@
 <body>
   <%- include('partials/_header.ejs') %>
   <main style="margin: 1em;">
+    <% if (user) { %>
     <h3>My URLs</h3>
     <table class="table">
       <thead>
@@ -21,6 +22,7 @@
         </tr>
       </thead>
       <tbody>
+        <% } %>
         <% if (user){ %>
         <% for(let url in urls) { %>
           <tr>
@@ -40,10 +42,12 @@
           <% } %>
           <% } else { %>
             <tr>
+              <center>
               <a href='/login'> Log in to see URLs </a>
             </br>
               <a href='/register'> Not registered yet? Register now! </a>
             </tr>
+            </center>
             <% } %>
 
       </tbody>
