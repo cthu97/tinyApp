@@ -11,7 +11,6 @@ app.set('view engine', 'ejs');
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }))
-// app.use(cookieParser())
 app.use(cookieSession({
   name: 'session',
   keys: ['keeeyone', 'keeotowo', "fhtheireie"]
@@ -31,23 +30,12 @@ const getUserByEmail = (users, email) => {
       return null;
     }
   
-    const users = {
-      "user1": {
-        id: 'user1',
-        email: 'a@a.com',
-        password: 'aa'
-      },
-      'user2': {
-        id: 'user2',
-        email: 'a@mail.com',
-        password: 'a'
-      }
-    }
+    const users = {}
 
     //authenticates correct user login
     const UserLogin = (email, password) => {
       const user = getUserByEmail(users,email);
-      if (user && bcrypt.compare(password, user.password)) {
+      if (user && bcrypt.compareSync(password, user.password)) {
         return user.id
       }
       else {
